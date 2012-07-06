@@ -1,0 +1,88 @@
+<html>
+<head>
+</head>
+<body>
+ <link type="text/css" rel="stylesheet" href="http://www.gstatic.com/codesite/ph/8169703206223286781/css/ph_core.css"> 
+ 
+ <link type="text/css" rel="stylesheet" href="http://www.gstatic.com/codesite/ph/8169703206223286781/css/ph_detail.css" > 
+ 
+
+			<div id="wikicontent" class="psdescription" style="margin-left:20px;font-size:10pt">
+
+				<p>This project aims to deliver a simple to use, yet powerful
+					and performant object-datastore mapping engine.</p>
+				<p>First, you define your persistent objects</p>
+				<pre class="prettyprint">class MappingFramework
+{
+    String name;
+    String description;
+    boolean rocks;
+}</pre>
+				<p>
+					Then, you can store instances in the ObjectStore
+				</p>
+				<pre class="prettyprint">ObjectStore os = ObjectStore.Factory.create();  // usually done once per JVM
+ObjectStoreSession oss = os.beginSession();     // usually done once per request and used throughout
+ 
+MappingFramework gaeom = new MappingFramework();
+gaeom.name = &quot;gaeom&quot;;
+gaeom.description = &quot;Supah object-datastore mapping&quot;;
+gaeom.rocks = true;
+ 
+oss.store(gaeom).id(1).now();</pre>
+				<p>You can retrieve objects like this</p>
+				<pre class="prettyprint">MappingFramework mf1 = oss.load(MappingFramework.class).id(1).now();</pre>
+				<p>or query for the first instance</p>
+				<pre class="prettyprint">MappingFramework mf2 = oss.find(MappingFramework.class).single().now();</pre>
+				<p>or the first instance that rocks</p>
+				<pre class="prettyprint">MappingFramework mf3 = oss.find(MappingFramework.class).filter(&quot;rocks&quot;, true).single().now();</pre>
+				<p>of you can query for all instances</p>
+				<pre class="prettyprint">List&lt;MappingFramework&gt; all = oss.find(MappingFramework.class).now();</pre>
+				<p>That&#x27;s just the beginning. gaeom has the following list
+					of features to help meet your GAE persistence needs.
+				<ul>
+					<li>Automatic mapping of POJOs to DatastoreService Entities</li>
+					<li>Uniqueness guarantee scoped by ObjectStoreSession (or by ObjectStore if class annotated as
+						Cached)</li>
+					<li>Activation controls at query-time to ensure you pull only
+						data that you want - by level or by filter-pattern</li>
+					<li>Seamless embedding of objects for performance and
+						queriability</li>
+					<li>Customizable encoding/decoding</li>
+					<li>Performance</li>
+					<ul>
+						<li>Automatic batching of generations of relationship
+							instance hydration</li>
+						<li>Robust retries to allow for EVENTUAL read consistency
+							setting (the default)</li>
+						<li>Cached metadata to speed instance hydration</li>
+					</ul>
+				</ul>
+				</p>
+				<p>We are actively working on improving this software in
+					preparation for its first release. For now, if you wish to try it
+					out, you can include the following dependency:</p>
+				<pre class="prettyprint">  	&lt;dependency&gt;
+  		&lt;groupId&gt;com.google.code.gaeom&lt;/groupId&gt;
+  		&lt;artifactId&gt;gaeom&lt;/artifactId&gt;
+  		&lt;version&gt;0.0.1-SNAPSHOT&lt;/version&gt;
+  	&lt;/dependency&gt;</pre>
+				<p>and the following repository entry</p>
+				<pre class="prettyprint">    &lt;repository&gt;
+      &lt;id&gt;Sonatype&lt;/id&gt;
+      &lt;url&gt;https://oss.sonatype.org/content/groups/public&lt;/url&gt;
+    &lt;/repository&gt;</pre></div>
+	<script
+		src="http://www.gstatic.com/codesite/ph/8169703206223286781/js/prettify/prettify_core_compiled.js"></script>
+	<script type="text/javascript">
+		prettyPrint();
+	</script>
+
+
+
+
+	<script type="text/javascript"
+		src="http://www.gstatic.com/codesite/ph/8169703206223286781/js/ph_core.js"></script>
+
+</body>
+</html>
